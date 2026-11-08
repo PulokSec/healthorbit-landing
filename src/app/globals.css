@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #17394a;
+  --color-ink-soft: #3c5d6c;
+  --color-ink-mute: #6b8592;
+  --color-mist: #e4ecef;
+  --color-mist-deep: #d3e0e5;
+  --color-paper: #f7fafa;
+  --color-line: #c9d7dc;
+  --color-signal: #e8a33d;
+  --color-signal-deep: #b97a1c;
+  --color-care: #2e8c7e;
+  --color-alert: #c2443b;
+
+  --font-display: "Sora Variable", "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Instrument Sans Variable", "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-pill: 999px;
+
+  --animate-spin-slow: spin 60s linear infinite;
+  --animate-spin-slower: spin 110s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-out infinite;
+
+  @keyframes pulse-dot {
+    0% { box-shadow: 0 0 0 0 rgb(46 140 126 / 0.45); }
+    70% { box-shadow: 0 0 0 10px rgb(46 140 126 / 0); }
+    100% { box-shadow: 0 0 0 0 rgb(46 140 126 / 0); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01";
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-signal); color: var(--color-ink); }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* A faint latitude/longitude grid used behind the hero and contact header */
+.graticule {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgb(23 57 74 / 0.12) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

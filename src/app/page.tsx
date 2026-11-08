@@ -1,0 +1,254 @@
+import Link from "next/link";
+import {
+  Ambulance,
+  CalendarCheck,
+  FileSearch,
+  HeartPulse,
+  MessageCircle,
+  Plane,
+  Stethoscope,
+  Video,
+} from "lucide-react";
+import { OrbitHero } from "@/components/orbit-hero";
+import { FacilityCard } from "@/components/facility-card";
+import { ButtonLink } from "@/components/ui/button";
+import { countries, facilitiesByCountry, featuredFacilities, flag, networkStats } from "@/data/network";
+import { offices, whatsapp } from "@/data/contact";
+
+const audiences = [
+  {
+    title: "Patients and families",
+    body: "Tell us your diagnosis and preferences. We shortlist hospitals, share costs up front, and coordinate the trip at no extra charge to you.",
+    href: "/health-network",
+    cta: "Find a hospital",
+  },
+  {
+    title: "Referral partners",
+    body: "Doctors, clinics and agents refer patients to accredited hospitals abroad and earn commission on successful referrals.",
+    href: "/contact?topic=referral",
+    cta: "Become a partner",
+  },
+  {
+    title: "Insurers and TPAs",
+    body: "Direct billing across our hospital network, group purchasing support, and a team that coordinates cases internationally.",
+    href: "/contact?topic=insurer",
+    cta: "Discuss collaboration",
+  },
+  {
+    title: "Hospitals and clinics",
+    body: "Reach international patients who are actively looking for the specialist treatment you provide.",
+    href: "/contact?topic=provider",
+    cta: "Apply to join",
+  },
+];
+
+const services = [
+  { icon: CalendarCheck, title: "In-person appointments", body: "Face-to-face consultations with specialists anywhere in the network." },
+  { icon: FileSearch, title: "Second medical opinion", body: "An international specialist reviews your diagnosis before you commit to treatment." },
+  { icon: Stethoscope, title: "Treatment abroad", body: "Surgery and specialist care that isn’t available, or isn’t timely, at home." },
+  { icon: HeartPulse, title: "Health check packages", body: "Screening plans built to catch serious conditions early." },
+  { icon: Ambulance, title: "Emergency evacuation", body: "Urgent transfers and air ambulance to a partner hospital." },
+  { icon: Video, title: "Video consultations", body: "Speak with a specialist from home, with no travel." },
+];
+
+const steps = [
+  { title: "Tell us what you need", body: "Send your condition, preferred treatment and destination through the form or WhatsApp." },
+  { title: "Compare your options", body: "Get a shortlist of hospitals and specialists with treatment plans and cost estimates." },
+  { title: "We arrange the travel", body: "Visa letters, flights and accommodation, with an itinerary shared with your family." },
+  { title: "Treatment and follow-up", body: "A coordinator stays with you during treatment and checks in on recovery at home." },
+];
+
+export default function HomePage() {
+  return (
+    <>
+      {/* Hero */}
+      <section className="graticule relative -mt-[72px] overflow-hidden pt-[72px]">
+        <div className="mx-auto grid max-w-7xl items-center gap-6 px-5 pb-16 pt-10 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:pb-24 lg:pt-16">
+          <div className="relative z-10">
+            <h1 className="max-w-[13ch] text-[clamp(2.6rem,6vw,4.6rem)] font-semibold leading-[1.02]">
+              Specialist care abroad, planned around you.
+            </h1>
+            <p className="mt-6 max-w-[46ch] text-lg text-ink-soft">
+              Faster access, a second opinion, or treatment you can’t get at home. We connect you with accredited
+              hospitals in {networkStats.countries} countries and handle everything until you’re home again.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/health-network">Explore the network</ButtonLink>
+              <ButtonLink href="/contact" variant="outline">
+                Talk to a coordinator
+              </ButtonLink>
+            </div>
+            <dl className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-ink-soft">
+              <div className="flex items-baseline gap-2">
+                <dt className="sr-only">Partner hospitals</dt>
+                <dd className="font-display text-xl font-semibold text-ink">{networkStats.partners}</dd>
+                <span>partner hospitals</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <dt className="sr-only">Patients assisted</dt>
+                <dd className="font-display text-xl font-semibold text-ink">{networkStats.patients}</dd>
+                <span>patients assisted</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <dt className="sr-only">Support hours</dt>
+                <dd className="font-display text-xl font-semibold text-ink">24/7</dd>
+                <span>patient support</span>
+              </div>
+            </dl>
+          </div>
+          <OrbitHero />
+        </div>
+      </section>
+
+      {/* Audiences */}
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+        <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
+          <div>
+            <h2 className="text-3xl font-semibold sm:text-4xl">One network, four ways in.</h2>
+            <p className="mt-4 max-w-sm text-ink-soft">
+              Whether you’re travelling for treatment or sending patients our way, you get the same coordination team.
+            </p>
+          </div>
+          <ul className="grid divide-y divide-line border-y border-line sm:grid-cols-2 sm:divide-y-0 sm:border-y-0">
+            {audiences.map((a, i) => (
+              <li
+                key={a.title}
+                className={`py-7 sm:px-6 sm:py-8 ${i < 2 ? "sm:border-b sm:border-line" : ""} ${i % 2 === 0 ? "sm:border-r sm:border-line sm:pl-0" : ""}`}
+              >
+                <h3 className="text-xl font-semibold">{a.title}</h3>
+                <p className="mt-2 text-ink-soft">{a.body}</p>
+                <Link
+                  href={a.href}
+                  className="mt-4 inline-block font-medium underline decoration-signal decoration-2 underline-offset-4 hover:decoration-ink"
+                >
+                  {a.cta}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Featured hospitals */}
+      <section className="bg-mist py-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h2 className="text-3xl font-semibold sm:text-4xl">Hospitals patients travel for</h2>
+              <p className="mt-3 max-w-xl text-ink-soft">
+                Accredited, vetted partners that treat patients from around the world.
+              </p>
+            </div>
+            <ButtonLink href="/health-network" variant="outline">
+              See all {countries.length} countries
+            </ButtonLink>
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredFacilities.slice(0, 6).map((f) => (
+              <FacilityCard key={f.slug} facility={f} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Countries */}
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+        <h2 className="text-3xl font-semibold sm:text-4xl">Where our partners are</h2>
+        <p className="mt-3 max-w-xl text-ink-soft">The number shows how many hospitals and clinics we work with in each country.</p>
+        <ul className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-[22px] border border-line bg-line sm:grid-cols-4 lg:grid-cols-5">
+          {countries.map((c) => (
+            <li key={c.code} className="bg-paper">
+              <Link
+                href={`/health-network?country=${encodeURIComponent(c.name)}`}
+                className="flex h-full items-center justify-between gap-3 px-5 py-4 transition-colors hover:bg-white"
+              >
+                <span className="flex items-center gap-2.5">
+                  <span aria-hidden className="text-lg">{flag(c.code)}</span>
+                  <span>{c.name}</span>
+                </span>
+                <span className="font-display text-sm tabular-nums text-ink-mute">{facilitiesByCountry(c.name).length}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Services + process */}
+      <section className="mx-auto max-w-7xl px-5 pb-8 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-semibold sm:text-4xl">What we arrange</h2>
+            <dl className="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2">
+              {services.map(({ icon: Icon, title, body }) => (
+                <div key={title}>
+                  <dt className="flex items-center gap-2.5 font-semibold">
+                    <Icon className="h-5 w-5 text-signal-deep" aria-hidden />
+                    {title}
+                  </dt>
+                  <dd className="mt-1.5 text-ink-soft">{body}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div className="rounded-[28px] bg-ink p-8 text-paper sm:p-10">
+            <h2 className="text-3xl font-semibold">How it works</h2>
+            <ol className="mt-8 space-y-0">
+              {steps.map((s, i) => (
+                <li key={s.title} className="relative grid grid-cols-[2.5rem_1fr] gap-4 pb-8 last:pb-0">
+                  {i < steps.length - 1 && (
+                    <span aria-hidden className="absolute left-[1.2rem] top-10 h-[calc(100%-2.5rem)] w-px bg-paper/20" />
+                  )}
+                  <span className="grid h-10 w-10 place-items-center rounded-full border border-paper/30 font-display text-sm">
+                    {i + 1}
+                  </span>
+                  <div className="pt-1.5">
+                    <h3 className="font-semibold">{s.title}</h3>
+                    <p className="mt-1 text-paper/70">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <a
+              href={whatsapp.link()}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-10 inline-flex h-11 items-center gap-2 rounded-pill bg-signal px-5 font-medium text-ink"
+            >
+              <Plane className="h-4 w-4" /> Start on WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact band */}
+      <section className="mx-auto mt-20 max-w-7xl px-5 sm:px-8">
+        <div className="grid gap-10 rounded-[28px] border border-line bg-white p-8 sm:p-12 lg:grid-cols-[1.1fr_1.9fr]">
+          <div>
+            <h2 className="text-3xl font-semibold">Talk to a real coordinator</h2>
+            <p className="mt-3 text-ink-soft">We usually reply within a few hours. For anything urgent, WhatsApp is fastest.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <ButtonLink href="/contact">Send an inquiry</ButtonLink>
+              <ButtonLink href={whatsapp.link()} variant="outline" target="_blank" rel="noreferrer">
+                <MessageCircle className="h-4 w-4" /> {whatsapp.display}
+              </ButtonLink>
+            </div>
+          </div>
+          <ul className="grid gap-6 sm:grid-cols-3">
+            {offices.map((o) => (
+              <li key={o.id} className="border-t-2 border-ink pt-4">
+                <p className="font-semibold">
+                  <span aria-hidden className="mr-1.5">{flag(o.code)}</span>
+                  {o.country}
+                </p>
+                <p className="mt-1 text-sm text-ink-soft">{o.address}</p>
+                <a href={`tel:${o.phone.replace(/\s/g, "")}`} className="mt-2 block text-sm font-medium hover:underline">
+                  {o.phone}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
+  );
+}
