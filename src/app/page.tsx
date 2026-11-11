@@ -1,6 +1,10 @@
-import Link from "next/link";
 import {
   Ambulance,
+  BriefcaseMedical,
+  FileText,
+  Globe,
+  Hospital,
+  Sparkles,
   CalendarCheck,
   FileSearch,
   HeartPulse,
@@ -16,30 +20,41 @@ import { ButtonLink } from "@/components/ui/button";
 import { countries, featuredFacilities, flag, networkStats } from "@/data/network";
 import { offices, whatsapp } from "@/data/contact";
 
-const audiences = [
+const capabilities = [
   {
-    title: "Patients and families",
-    body: "Tell us your diagnosis and preferences. We shortlist hospitals, share costs up front, and coordinate the trip at no extra charge to you.",
-    href: "/health-network",
-    cta: "Find a hospital",
+    icon: Globe,
+    tone: "border-cyan-400/30 bg-cyan-500/15 text-cyan-300",
+    title: "Multi-Country Network",
+    highlight: "Singapore, Malaysia, Thailand, China, India & many more",
+    body: "Access leading international healthcare systems across Asia through one dedicated team in Dhaka.",
   },
   {
-    title: "Referral partners",
-    body: "Doctors, clinics and agents refer patients to accredited hospitals abroad and earn commission on successful referrals.",
-    href: "/contact?topic=referral",
-    cta: "Become a partner",
+    icon: Hospital,
+    tone: "border-emerald-400/30 bg-emerald-500/15 text-emerald-300",
+    title: "Foreign Hospitals Under One Roof",
+    highlight: "350+ Accredited Partner Hospitals",
+    body: "Compare hospital facilities, doctor credentials, and cost estimates without needing to travel or hire multiple agents.",
   },
   {
-    title: "Insurers and TPAs",
-    body: "Direct billing across our hospital network, group purchasing support, and a team that coordinates cases internationally.",
-    href: "/contact?topic=insurer",
-    cta: "Discuss collaboration",
+    icon: Plane,
+    tone: "border-rose-400/30 bg-rose-500/15 text-rose-300",
+    title: "Air Ambulance",
+    highlight: null,
+    body: "Fully equipped airborne ICU charters with dedicated aeromedical doctors, ventilator support, and bed-to-bed transfers.",
   },
   {
-    title: "Hospitals and clinics",
-    body: "Reach international patients who are actively looking for the specialist treatment you provide.",
-    href: "/contact?topic=provider",
-    cta: "Apply to join",
+    icon: BriefcaseMedical,
+    tone: "border-emerald-400/30 bg-emerald-500/15 text-emerald-300",
+    title: "Direct Hospital Bed Admission",
+    highlight: "Airport Buggy & Ambulance Liaison",
+    body: "Tarmac ambulance pick-up directly from aircraft to hospital room, bypassing emergency room queues.",
+  },
+  {
+    icon: FileText,
+    tone: "border-amber-400/30 bg-amber-500/15 text-amber-300",
+    title: "Multi Hospital Quotation",
+    highlight: "Compare Costs Across Hospitals",
+    body: "Receive itemised treatment estimates from several partner hospitals at once, so you can compare side by side.",
   },
 ];
 
@@ -101,34 +116,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Audiences */}
-      {/* <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
-          <div>
-            <h2 className="text-3xl font-semibold sm:text-4xl">One network, four ways in.</h2>
-            <p className="mt-4 max-w-sm text-ink-soft">
-              Whether you’re travelling for treatment or sending patients our way, you get the same coordination team.
-            </p>
+      {/* Why choose HealthOrbit */}
+      <section className="bg-[#0c1426] py-20 text-white sm:py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300">
+              <Sparkles className="h-4 w-4" aria-hidden />
+              Why choose HealthOrbit
+            </span>
+            <h2 className="mt-6 text-3xl font-semibold text-white sm:text-5xl">Specialized Facilitation Capabilities</h2>
           </div>
-          <ul className="grid divide-y divide-line border-y border-line sm:grid-cols-2 sm:divide-y-0 sm:border-y-0">
-            {audiences.map((a, i) => (
-              <li
-                key={a.title}
-                className={`py-7 sm:px-6 sm:py-8 ${i < 2 ? "sm:border-b sm:border-line" : ""} ${i % 2 === 0 ? "sm:border-r sm:border-line sm:pl-0" : ""}`}
-              >
-                <h3 className="text-xl font-semibold">{a.title}</h3>
-                <p className="mt-2 text-ink-soft">{a.body}</p>
-                <Link
-                  href={a.href}
-                  className="mt-4 inline-block font-medium underline decoration-signal decoration-2 underline-offset-4 hover:decoration-ink"
-                >
-                  {a.cta}
-                </Link>
+          <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {capabilities.map(({ icon: Icon, tone, title, highlight, body }) => (
+              <li key={title} className="rounded-3xl border border-white/10 bg-[#1b2538] p-6 sm:p-7">
+                <span className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border ${tone}`}>
+                  <Icon className="h-6 w-6" aria-hidden />
+                </span>
+                <h3 className="mt-6 text-xl font-semibold leading-snug text-white">{title}</h3>
+                {highlight && <p className="mt-3 text-sm font-semibold text-teal-300">{highlight}</p>}
+                <p className="mt-3 text-slate-300">{body}</p>
               </li>
             ))}
           </ul>
         </div>
-      </section> */}
+      </section>
 
       {/* Featured hospitals */}
       {/* <section className="bg-mist py-20">
