@@ -102,7 +102,7 @@ export default function HomePage() {
       </section>
 
       {/* Audiences */}
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+      {/* <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
           <div>
             <h2 className="text-3xl font-semibold sm:text-4xl">One network, four ways in.</h2>
@@ -128,7 +128,7 @@ export default function HomePage() {
             ))}
           </ul>
         </div>
-      </section>
+      </section> */}
 
       {/* Featured hospitals */}
       {/* <section className="bg-mist py-20">
