@@ -11,8 +11,9 @@ import {
 } from "lucide-react";
 import { OrbitHero } from "@/components/orbit-hero";
 import { FacilityCard } from "@/components/facility-card";
+import { CountryCard } from "@/components/country-card";
 import { ButtonLink } from "@/components/ui/button";
-import { countries, facilitiesByCountry, featuredFacilities, flag, networkStats } from "@/data/network";
+import { countries, featuredFacilities, flag, networkStats } from "@/data/network";
 import { offices, whatsapp } from "@/data/contact";
 
 const audiences = [
@@ -130,7 +131,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured hospitals */}
-      <section className="bg-mist py-20">
+      {/* <section className="bg-mist py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
@@ -149,25 +150,19 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Countries */}
       <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
-        <h2 className="text-3xl font-semibold sm:text-4xl">Where our partners are</h2>
-        <p className="mt-3 max-w-xl text-ink-soft">The number shows how many hospitals and clinics we work with in each country.</p>
-        <ul className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-[22px] border border-line bg-line sm:grid-cols-4 lg:grid-cols-5">
+        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-signal-deep">International hospital network</p>
+        <h2 className="mt-2 text-3xl font-semibold sm:text-4xl">Where our partners are</h2>
+        <p className="mt-3 max-w-2xl text-ink-soft">
+          Pick a destination to see the accredited hospitals and specialist centres we work with there.
+        </p>
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {countries.map((c) => (
-            <li key={c.code} className="bg-paper">
-              <Link
-                href={`/health-network?country=${encodeURIComponent(c.name)}`}
-                className="flex h-full items-center justify-between gap-3 px-5 py-4 transition-colors hover:bg-white"
-              >
-                <span className="flex items-center gap-2.5">
-                  <span aria-hidden className="text-lg">{flag(c.code)}</span>
-                  <span>{c.name}</span>
-                </span>
-                <span className="font-display text-sm tabular-nums text-ink-mute">{facilitiesByCountry(c.name).length}</span>
-              </Link>
+            <li key={c.code}>
+              <CountryCard country={c} />
             </li>
           ))}
         </ul>

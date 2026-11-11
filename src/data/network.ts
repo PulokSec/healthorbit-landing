@@ -293,6 +293,9 @@ export const getFacility = (slug: string) => facilities.find((f) => f.slug === s
 
 export const getCountry = (name: string) => countries.find((c) => c.name === name)!;
 
+/** Destination photo in /public/images/countries (Unsplash, free licence). */
+export const countryImage = (name: string) => `/images/countries/${slugify(name)}.jpg`;
+
 export const networkStats = {
   partners: "350+",
   patients: "55,000+",
