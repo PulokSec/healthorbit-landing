@@ -15,45 +15,45 @@ export type Office = {
 
 export const offices: Office[] = [
   {
-    id: "us",
-    country: "United States",
-    code: "US",
-    city: "Dover, Delaware",
-    address: "1151 Walker Rd, Ste 233, Dover, DE, USA",
-    phone: "+1 401 400 0015",
-    email: "usa@healthorbit.com",
-    timeZone: "America/New_York",
+    id: "bd",
+    country: "Bangladesh",
+    code: "BD",
+    city: "Mirpur DOHS, Dhaka, Bangladesh",
+    address: "House 1320, Road 2, Avenue 2, Mirpur DOHS, Dhaka, Bangladesh",
+    phone: "+880 1970 078669",
+    email: "bd@healthorbit.com",
+    timeZone: "Dhaka/Asia",
     hours: { open: 9, close: 18, days: [1, 2, 3, 4, 5] },
   },
-  {
-    id: "uae",
-    country: "United Arab Emirates",
-    code: "AE",
-    city: "Business Bay, Dubai",
-    address: "Empire Heights A, 16F-A-04, Business Bay, Dubai, UAE",
-    phone: "+971 54 391 2015",
-    email: "uae@healthorbit.com",
-    timeZone: "Asia/Dubai",
-    hours: { open: 9, close: 18, days: [1, 2, 3, 4, 5] },
-  },
-  {
-    id: "ke",
-    country: "Kenya",
-    code: "KE",
-    city: "Westlands, Nairobi",
-    address: "The Westwood Office Building, Westlands, Nairobi, Kenya",
-    phone: "+254 711 082 072",
-    email: "kenya@healthorbit.com",
-    timeZone: "Africa/Nairobi",
-    hours: { open: 8, close: 17, days: [1, 2, 3, 4, 5, 6] },
-  },
+  // {
+  //   id: "uae",
+  //   country: "United Arab Emirates",
+  //   code: "AE",
+  //   city: "Business Bay, Dubai",
+  //   address: "Empire Heights A, 16F-A-04, Business Bay, Dubai, UAE",
+  //   phone: "+971 54 391 2015",
+  //   email: "uae@healthorbit.com",
+  //   timeZone: "Asia/Dubai",
+  //   hours: { open: 9, close: 18, days: [1, 2, 3, 4, 5] },
+  // },
+  // {
+  //   id: "ke",
+  //   country: "Kenya",
+  //   code: "KE",
+  //   city: "Westlands, Nairobi",
+  //   address: "The Westwood Office Building, Westlands, Nairobi, Kenya",
+  //   phone: "+254 711 082 072",
+  //   email: "kenya@healthorbit.com",
+  //   timeZone: "Africa/Nairobi",
+  //   hours: { open: 8, close: 17, days: [1, 2, 3, 4, 5, 6] },
+  // },
 ];
 
 export const whatsapp = {
-  display: "+1 718 550 0880",
-  number: "17185500880",
+  display: "+880 1970 078669",
+  number: "8801970078669",
   link: (text = "Hi HealthOrbit, I’d like help from a patient support specialist.") =>
-    `https://wa.me/17185500880?text=${encodeURIComponent(text)}`,
+    `https://wa.me/8801970078669?text=${encodeURIComponent(text)}`,
 };
 
 export const socials = [
