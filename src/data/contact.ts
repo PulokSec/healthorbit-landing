@@ -10,6 +10,7 @@ export type Office = {
   phone: string;
   email: string;
   timeZone: string; // IANA zone used to show the office's local time
+  image?: string; // photo shown at the top of the office card
   hours: { open: number; close: number; days: number[] }; // 24h, days 1=Mon..7=Sun
 };
 
@@ -22,7 +23,8 @@ export const offices: Office[] = [
     address: "House 1320, Road 2, Avenue 2, Mirpur DOHS, Dhaka, Bangladesh",
     phone: "+880 1970 078669",
     email: "bd@healthorbit.com",
-    timeZone: "Dhaka/Asia",
+    timeZone: "Asia/Dhaka",
+    image: "/images/pages/office-dhaka.jpg",
     hours: { open: 9, close: 18, days: [1, 2, 3, 4, 5] },
   },
   // {

@@ -13,12 +13,13 @@ import {
   Stethoscope,
   Video,
 } from "lucide-react";
+import Image from "next/image";
 import { OrbitHero } from "@/components/orbit-hero";
 import { FacilityCard } from "@/components/facility-card";
 import { CountryCard } from "@/components/country-card";
 import { ButtonLink } from "@/components/ui/button";
-import { countries, featuredFacilities, flag, networkStats } from "@/data/network";
-import { offices, whatsapp } from "@/data/contact";
+import { countries, countryImage, featuredFacilities, networkStats } from "@/data/network";
+import { whatsapp } from "@/data/contact";
 
 const capabilities = [
   {
@@ -99,16 +100,6 @@ export default function HomePage() {
                 <dt className="sr-only">Partner hospitals</dt>
                 <dd className="font-display text-xl font-semibold text-ink">{networkStats.partners}</dd>
                 <span>partner hospitals</span>
-              </div>
-              <div className="flex items-baseline gap-2">
-                <dt className="sr-only">Patients assisted</dt>
-                <dd className="font-display text-xl font-semibold text-ink">{networkStats.patients}</dd>
-                <span>patients assisted</span>
-              </div>
-              <div className="flex items-baseline gap-2">
-                <dt className="sr-only">Support hours</dt>
-                <dd className="font-display text-xl font-semibold text-ink">24/7</dd>
-                <span>patient support</span>
               </div>
             </dl>
           </div>
@@ -228,28 +219,29 @@ export default function HomePage() {
 
       {/* Contact band */}
       <section className="mx-auto mt-20 max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-10 rounded-[28px] border border-line bg-white p-8 sm:p-12 lg:grid-cols-[1.1fr_1.9fr]">
-          <div>
+        <div className="rounded-[28px] border border-line bg-white p-8 sm:p-12">
+          <div className="mx-auto max-w-xl text-center">
             <h2 className="text-3xl font-semibold">Talk to a real coordinator</h2>
             <p className="mt-3 text-ink-soft">We usually reply within a few hours. For anything urgent, WhatsApp is fastest.</p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
               <ButtonLink href="/contact">Send an inquiry</ButtonLink>
               <ButtonLink href={whatsapp.link()} variant="outline" target="_blank" rel="noreferrer">
                 <MessageCircle className="h-4 w-4" /> {whatsapp.display}
               </ButtonLink>
             </div>
           </div>
-          <ul className="grid gap-6 sm:grid-cols-3">
-            {offices.map((o) => (
-              <li key={o.id} className="border-t-2 border-ink pt-4">
-                <p className="font-semibold">
-                  <span aria-hidden className="mr-1.5">{flag(o.code)}</span>
-                  {o.country}
-                </p>
-                <p className="mt-1 text-sm text-ink-soft">{o.address}</p>
-                <a href={`tel:${o.phone.replace(/\s/g, "")}`} className="mt-2 block text-sm font-medium hover:underline">
-                  {o.phone}
-                </a>
+          <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            {countries.slice(0, 4).map((c) => (
+              <li key={c.code} className="relative aspect-[4/3] overflow-hidden rounded-[18px] bg-mist">
+                <Image
+                  src={countryImage(c.name)}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 18rem, 45vw"
+                  className="object-cover"
+                />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/0 to-ink/0" />
+                <span className="absolute bottom-3 left-4 text-sm font-medium text-white">{c.name}</span>
               </li>
             ))}
           </ul>

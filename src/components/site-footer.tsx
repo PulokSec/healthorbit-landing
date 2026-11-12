@@ -38,7 +38,6 @@ export function SiteFooter() {
             <h2 className="mb-4 text-sm font-normal text-paper/55">Work with us</h2>
             <ul className="space-y-2.5">
               <li><Link href="/contact?topic=referral" className="hover:text-signal">Become a referral partner</Link></li>
-              <li><Link href="/contact?topic=insurer" className="hover:text-signal">Insurance collaboration</Link></li>
               <li><Link href="/contact?topic=provider" className="hover:text-signal">Join our hospital network</Link></li>
             </ul>
           </div>
