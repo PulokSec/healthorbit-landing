@@ -24,11 +24,11 @@ export default function AboutPage() {
         <div className="relative h-64 sm:h-80 lg:absolute lg:bottom-0 lg:right-0 lg:top-[72px] lg:h-auto lg:w-[52%]">
           <Image
             src="/images/pages/about-hero.jpg"
-            alt="A doctor talking with a mother and her son"
+            alt="A HealthOrbit consultant meeting with a client at a desk"
             fill
             priority
             sizes="(min-width: 1024px) 52vw, 100vw"
-            className="object-cover lg:[clip-path:ellipse(100%_135%_at_100%_50%)]"
+            className="object-cover object-top lg:[clip-path:ellipse(100%_135%_at_100%_50%)]"
           />
         </div>
         <div className="mx-auto max-w-7xl px-5 pb-14 pt-10 sm:px-8 lg:py-24">
