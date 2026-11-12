@@ -2,9 +2,21 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { featuredFacilities, flag, getCountry } from "@/data/network";
+import { flag, getCountry, getFacility, type Facility } from "@/data/network";
 
-type Ring = { radius: number; duration: number; reverse?: boolean; items: typeof featuredFacilities };
+type Ring = { radius: number; duration: number; reverse?: boolean; items: Facility[] };
+
+/** Partner hospitals shown in the orbit, in ring order. */
+const orbitSlugs = [
+  "bumrungrad-international-hospital",
+  "apollo-hospital",
+  "raffles-hospital",
+  "samsung-medical-center",
+  "anadolu-medical-center",
+  "american-hospital-dubai",
+  "fuda-cancer-hospital",
+  "prince-court-medical-centre",
+];
 
 /**
  * The page's one orchestrated moment: the logo's globe draws itself, then featured
@@ -12,7 +24,7 @@ type Ring = { radius: number; duration: number; reverse?: boolean; items: typeof
  */
 export function OrbitHero() {
   const reduce = useReducedMotion();
-  const items = featuredFacilities.slice(0, 8);
+  const items = orbitSlugs.map((slug) => getFacility(slug)!);
   const rings: Ring[] = [
     { radius: 31, duration: 80, items: items.slice(0, 3) },
     { radius: 46, duration: 120, reverse: true, items: items.slice(3, 8) },
