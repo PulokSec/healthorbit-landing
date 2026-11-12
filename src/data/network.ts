@@ -3,7 +3,8 @@ export type FacilityType = "Hospital" | "Clinic" | "Wellness centre" | "Departme
 export type Facility = {
   slug: string;
   name: string;
-  city: string;
+  /** Omitted when the source list doesn't give one. */
+  city?: string;
   country: string;
   type: FacilityType;
   /** One-line summary shown on cards. Only set for featured facilities. */
@@ -16,29 +17,32 @@ export type Country = {
   name: string;
   code: string; // ISO 3166-1 alpha-2, used for flag emoji
   region: "Asia" | "Europe" | "Middle East" | "Africa" | "Americas";
+  /** Total partner hospitals in the country, including ones not listed individually. */
+  hospitals: number;
 };
 
 export const countries: Country[] = [
-  { name: "Thailand", code: "TH", region: "Asia" },
-  { name: "United Kingdom", code: "GB", region: "Europe" },
-  { name: "United Arab Emirates", code: "AE", region: "Middle East" },
-  { name: "Turkey", code: "TR", region: "Europe" },
-  { name: "India", code: "IN", region: "Asia" },
-  { name: "Singapore", code: "SG", region: "Asia" },
-  { name: "Malaysia", code: "MY", region: "Asia" },
-  { name: "Kenya", code: "KE", region: "Africa" },
-  { name: "Egypt", code: "EG", region: "Africa" },
-  { name: "Uganda", code: "UG", region: "Africa" },
-  { name: "Germany", code: "DE", region: "Europe" },
-  { name: "Saudi Arabia", code: "SA", region: "Middle East" },
-  { name: "Czech Republic", code: "CZ", region: "Europe" },
-  { name: "Mauritius", code: "MU", region: "Africa" },
-  { name: "Vietnam", code: "VN", region: "Asia" },
-  { name: "Switzerland", code: "CH", region: "Europe" },
-  { name: "Spain", code: "ES", region: "Europe" },
-  { name: "South Korea", code: "KR", region: "Asia" },
-  { name: "China", code: "CN", region: "Asia" },
-  { name: "Mexico", code: "MX", region: "Americas" },
+  { name: "Thailand", code: "TH", region: "Asia", hospitals: 9 },
+  { name: "United Kingdom", code: "GB", region: "Europe", hospitals: 14 },
+  { name: "United Arab Emirates", code: "AE", region: "Middle East", hospitals: 35 },
+  { name: "Turkey", code: "TR", region: "Europe", hospitals: 44 },
+  { name: "India", code: "IN", region: "Asia", hospitals: 68 },
+  { name: "Singapore", code: "SG", region: "Asia", hospitals: 11 },
+  { name: "Malaysia", code: "MY", region: "Asia", hospitals: 30 },
+  { name: "Kenya", code: "KE", region: "Africa", hospitals: 10 },
+  { name: "Egypt", code: "EG", region: "Africa", hospitals: 13 },
+  { name: "Uganda", code: "UG", region: "Africa", hospitals: 1 },
+  { name: "Germany", code: "DE", region: "Europe", hospitals: 3 },
+  { name: "Saudi Arabia", code: "SA", region: "Middle East", hospitals: 6 },
+  { name: "Czech Republic", code: "CZ", region: "Europe", hospitals: 4 },
+  { name: "Mauritius", code: "MU", region: "Africa", hospitals: 5 },
+  { name: "Vietnam", code: "VN", region: "Asia", hospitals: 10 },
+  { name: "Switzerland", code: "CH", region: "Europe", hospitals: 1 },
+  { name: "Spain", code: "ES", region: "Europe", hospitals: 10 },
+  { name: "South Korea", code: "KR", region: "Asia", hospitals: 4 },
+  { name: "China", code: "CN", region: "Asia", hospitals: 4 },
+  { name: "Mexico", code: "MX", region: "Americas", hospitals: 2 },
+  { name: "United States", code: "US", region: "Americas", hospitals: 3 },
 ];
 
 export const flag = (code: string) =>
@@ -56,7 +60,7 @@ const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-type Seed = [name: string, city: string, type?: FacilityType, extra?: Partial<Facility>];
+type Seed = [name: string, city?: string, type?: FacilityType, extra?: Partial<Facility>];
 
 const seeds: Record<string, Seed[]> = {
   Thailand: [
@@ -65,6 +69,10 @@ const seeds: Record<string, Seed[]> = {
       highlight: "Over 1,300 specialist physicians, more than 200 of them US board-certified.",
       specialties: ["Cardiology", "Cardiothoracic surgery", "Colorectal surgery"],
     }],
+    ["Samitivej Sukhumvit Hospital"],
+    ["Vejthani Hospital"],
+    ["MedPark Hospital"],
+    ["Bangkok Hospital Campus", "Bangkok"],
     ["VitalLife Scientific Wellness Center", "Bangkok", "Wellness centre"],
     ["Bumrungrad Hospital – Cosmetic Procedures", "Bangkok", "Department"],
     ["RXV Wellness Village Sampran", "Sam Phran", "Wellness centre"],
@@ -146,18 +154,19 @@ const seeds: Record<string, Seed[]> = {
       highlight: "India’s largest hospital network, with thousands of cardiac surgeries and transplants each year.",
       specialties: ["Fertility", "Cardiology", "Colorectal surgery"],
     }],
-    ["Gleneagles Hospital", "Mumbai"],
+    ["Apollo Children’s Hospital"],
+    ["Gleneagles Global Hospital", "Hyderabad"],
     ["Fortis Hospitals", "Delhi"],
-    ["Wockhardt Hospitals", "Mumbai"],
-    ["Max Healthcare", "Delhi"],
+    ["Wockhardt Hospital", "Rajkot"],
+    ["Max Super Speciality Hospital", "Vaishali"],
     ["Artemis Hospital", "Delhi"],
     ["Accord Hospital", "Faridabad"],
     ["Rainbow Children's Hospital", "Hyderabad"],
-    ["HCG Hospitals", "Bangalore"],
+    ["HCG Hospital", "Ahmedabad"],
     ["MIOT International Hospital", "Chennai"],
     ["Kokilaben Dhirubhai Ambani Hospital", "Mumbai"],
     ["Yashoda Hospitals", "Hyderabad"],
-    ["Medanta Hospital", "Gurugram", "Hospital", {
+    ["Medanta – The Medicity", "Gurugram", "Hospital", {
       highlight: "Founded by a renowned cardiac surgeon; known worldwide for complex heart procedures.",
       specialties: ["Cardiology", "Cardiothoracic surgery", "Colorectal surgery"],
     }],
@@ -166,7 +175,7 @@ const seeds: Record<string, Seed[]> = {
     ["MGM Healthcare", "Chennai"],
     ["Kauvery Hospital", "Chennai"],
     ["Aster CMI Hospital", "Bangalore"],
-    ["Medicover Hospitals", "Hyderabad"],
+    ["Medicover Hospitals", "Navi Mumbai"],
     ["Fortis La Femme Hospital", "New Delhi"],
   ],
   Singapore: [
@@ -175,7 +184,8 @@ const seeds: Record<string, Seed[]> = {
       highlight: "Inpatient, outpatient, specialist and traditional Chinese medicine under one roof.",
       specialties: ["Fertility", "Cardiology", "Cardiothoracic surgery"],
     }],
-    ["Icon Cancer Centre", "Singapore"],
+    ["Icon Cancer Centre Mount Elizabeth", "Singapore"],
+    ["Icon Haematology Centre – Mount Elizabeth", "Singapore"],
   ],
   Malaysia: [
     ["Sunway Medical Centre", "Selangor"],
@@ -195,6 +205,8 @@ const seeds: Record<string, Seed[]> = {
     ["Mahkota Medical Centre", "Melaka", "Clinic"],
     ["Pantai Hospitals", "Kuala Lumpur"],
     ["Gleneagles Hospitals", "Kuala Lumpur"],
+    ["Bukit Tinggi Medical Centre"],
+    ["Damansara Specialist Hospital 2"],
   ],
   Kenya: [
     ["Gertrude's Children's Hospital", "Nairobi"],
@@ -222,7 +234,9 @@ const seeds: Record<string, Seed[]> = {
   ],
   "Saudi Arabia": [
     ["Saudi German Hospital", "Riyadh"],
-    ["Andalusia Saudi Arabia", "Jeddah"],
+    ["Andalusia Hospital", "Jeddah", "Hospital", { slug: "andalusia-hospital-jeddah" }],
+    ["Andalusia Kids Wellness Center", undefined, "Wellness centre"],
+    ["Andalusia Dental Center", undefined, "Clinic"],
     ["King Faisal Specialist Hospital and Research Centre", "Riyadh"],
   ],
   "Czech Republic": [
@@ -248,6 +262,7 @@ const seeds: Record<string, Seed[]> = {
     }],
   ],
   "South Korea": [
+    ["Severance Hospital"],
     ["JW Plastic Surgery", "Seoul"],
     ["JK Plastic Surgery Centre", "Seoul"],
     ["Samsung Medical Centre", "Seoul", "Hospital", {
@@ -255,7 +270,6 @@ const seeds: Record<string, Seed[]> = {
       highlight: "Among Asia’s top hospitals for cancer treatment and organ transplants.",
       specialties: ["Oncology", "Organ transplant", "Cardiology"],
     }],
-    ["Asan Medical Center", "Seoul"],
   ],
   China: [
     ["Beijing Jingdu Children’s Hospital", "Beijing"],
@@ -264,8 +278,7 @@ const seeds: Record<string, Seed[]> = {
       highlight: "Specialist oncology centre focused on minimally invasive cancer treatment.",
       specialties: ["Oncology"],
     }],
-    ["GoBroad Healthcare Group", "Beijing"],
-    ["United Family Healthcare", "Beijing"],
+    ["Beijing GoBroad Hospital", "Beijing"],
   ],
   Mexico: [
     ["Marroquín and Sandoval Plastic Surgery Clinic", "Guadalajara", "Clinic"],
@@ -291,13 +304,16 @@ export const facilitiesByCountry = (country: string) =>
 
 export const getFacility = (slug: string) => facilities.find((f) => f.slug === slug);
 
+/** "City, Country", or just the country when no city is known. */
+export const place = (f: Facility) => (f.city ? `${f.city}, ${f.country}` : f.country);
+
 export const getCountry = (name: string) => countries.find((c) => c.name === name)!;
 
 /** Destination photo in /public/images/countries (Unsplash, free licence). */
 export const countryImage = (name: string) => `/images/countries/${slugify(name)}.jpg`;
 
 export const networkStats = {
-  partners: "350+",
+  partners: String(countries.reduce((sum, c) => sum + c.hospitals, 0)),
   patients: "55,000+",
   countries: countries.length,
   rating: "4.8/5",

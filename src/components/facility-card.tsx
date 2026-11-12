@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
-import { flag, getCountry, type Facility } from "@/data/network";
+import { flag, getCountry, place, type Facility } from "@/data/network";
 import { cn } from "@/lib/utils";
 
 export function FacilityCard({ facility, className }: { facility: Facility; className?: string }) {
@@ -15,7 +15,7 @@ export function FacilityCard({ facility, className }: { facility: Facility; clas
       <div className="flex items-center justify-between text-sm text-ink-mute">
         <span className="inline-flex items-center gap-1.5">
           <MapPin className="h-3.5 w-3.5" />
-          {facility.city}, {facility.country}
+          {place(facility)}
         </span>
         <span aria-hidden className="text-xl">{flag(c.code)}</span>
       </div>

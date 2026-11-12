@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu, MessageCircle, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { ButtonLink } from "@/components/ui/button";
-import { countries, facilitiesByCountry, flag, type Country } from "@/data/network";
+import { countries, flag, type Country } from "@/data/network";
 import { whatsapp } from "@/data/contact";
 import { cn } from "@/lib/utils";
 
@@ -167,7 +167,7 @@ export function SiteHeader() {
                                 {c.name}
                               </span>
                               <span className="text-sm tabular-nums text-ink-mute group-hover:text-ink">
-                                {facilitiesByCountry(c.name).length}
+                                {c.hospitals}
                               </span>
                             </Link>
                           </li>

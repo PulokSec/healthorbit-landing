@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarCheck, FileSearch, MessageCircle, Plane, Video } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
-import { facilities, facilitiesByCountry, flag, getCountry, getFacility } from "@/data/network";
+import { facilities, facilitiesByCountry, flag, getCountry, getFacility, place } from "@/data/network";
 import { whatsapp } from "@/data/contact";
 
 export function generateStaticParams() {
@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const f = getFacility(slug);
   if (!f) return {};
   return {
-    title: `${f.name}, ${f.city}`,
-    description: f.highlight ?? `Arrange treatment at ${f.name} in ${f.city}, ${f.country} with HealthOrbit.`,
+    title: f.city ? `${f.name}, ${f.city}` : f.name,
+    description: f.highlight ?? `Arrange treatment at ${f.name} in ${place(f)} with HealthOrbit.`,
   };
 }
 
@@ -48,7 +48,7 @@ export default async function FacilityPage({ params }: { params: Promise<{ slug:
         <div>
           <p className="flex items-center gap-2 text-ink-soft">
             <span aria-hidden className="text-xl">{flag(c.code)}</span>
-            {f.city}, {f.country}
+            {place(f)}
             <span className="ml-1 rounded-pill bg-mist px-2.5 py-0.5 text-sm">{f.type}</span>
           </p>
           <h1 className="mt-4 text-[clamp(2.2rem,5vw,3.6rem)] font-semibold leading-[1.05]">{f.name}</h1>
@@ -103,7 +103,7 @@ export default async function FacilityPage({ params }: { params: Promise<{ slug:
             </div>
           </div>
           <a
-            href={whatsapp.link(`Hello, I have an inquiry about ${f.name} in ${f.city}.`)}
+            href={whatsapp.link(`Hello, I have an inquiry about ${f.name} in ${place(f)}.`)}
             target="_blank"
             rel="noreferrer"
             className="mt-4 flex items-center justify-center gap-2 rounded-pill bg-care px-5 py-3 font-medium text-white"

@@ -7,9 +7,8 @@ const PREVIEW = 3;
 
 export function CountryCard({ country }: { country: Country }) {
   const items = facilitiesByCountry(country.name);
-  const hospitals = items.filter((f) => f.type === "Hospital").length;
   const preview = items.slice(0, PREVIEW).map((f) => f.name);
-  const more = items.length - preview.length;
+  const more = preview.length > 0 ? country.hospitals - preview.length : 0;
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-line bg-white transition-all duration-300 hover:-translate-y-1 hover:border-ink/40 hover:shadow-[0_18px_40px_-20px_rgba(23,57,74,0.45)]">
@@ -23,7 +22,7 @@ export function CountryCard({ country }: { country: Country }) {
         />
         <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/55 via-ink/0 to-ink/0" />
         <span className="absolute bottom-3 left-4 rounded-pill bg-white/90 px-2.5 py-1 text-xs font-medium text-ink backdrop-blur">
-          {items.length} {items.length === 1 ? "partner" : "partners"}
+          {country.hospitals} {country.hospitals === 1 ? "partner" : "partners"}
         </span>
       </div>
 
@@ -44,9 +43,7 @@ export function CountryCard({ country }: { country: Country }) {
           </Link>
         </h3>
         <p className="mt-1 text-sm font-medium text-signal-deep">
-          {hospitals > 0
-            ? `${hospitals} partner ${hospitals === 1 ? "hospital" : "hospitals"}`
-            : `${items.length} specialist ${items.length === 1 ? "centre" : "centres"}`}
+          {country.hospitals} partner {country.hospitals === 1 ? "hospital" : "hospitals"}
         </p>
         <p className="mt-3 line-clamp-2 text-sm text-ink-soft">{preview.join(", ")}</p>
         {more > 0 && <p className="mt-1 text-sm text-ink-mute">+ {more} more</p>}

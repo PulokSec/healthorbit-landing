@@ -5,6 +5,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
+import { countries, networkStats } from "@/data/network";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://healthorbit.com"),
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s · HealthOrbit",
   },
   description:
-    "HealthOrbit connects international patients with 350+ accredited hospitals in 20 countries and coordinates everything from hospital choice to follow-up at home.",
+    `HealthOrbit connects international patients with ${networkStats.partners} accredited hospitals in ${countries.length} countries and coordinates everything from hospital choice to follow-up at home.`,
   icons: { icon: "/icon.svg" },
 };
 

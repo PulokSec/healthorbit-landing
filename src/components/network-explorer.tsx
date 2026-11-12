@@ -37,7 +37,7 @@ export function NetworkExplorer() {
       (f) =>
         (!country || f.country === country) &&
         (type === "All" || f.type === type) &&
-        (!q || `${f.name} ${f.city} ${f.country} ${(f.specialties ?? []).join(" ")}`.toLowerCase().includes(q)),
+        (!q || `${f.name} ${f.city ?? ""} ${f.country} ${(f.specialties ?? []).join(" ")}`.toLowerCase().includes(q)),
     );
   }, [country, type, query]);
 

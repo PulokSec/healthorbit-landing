@@ -32,7 +32,7 @@ const capabilities = [
     icon: Hospital,
     tone: "border-emerald-400/30 bg-emerald-500/15 text-emerald-300",
     title: "Foreign Hospitals Under One Roof",
-    highlight: "350+ Accredited Partner Hospitals",
+    highlight: `${networkStats.partners} Accredited Partner Hospitals`,
     body: "Compare hospital facilities, doctor credentials, and cost estimates without needing to travel or hire multiple agents.",
   },
   {
