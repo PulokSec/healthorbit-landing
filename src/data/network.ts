@@ -314,7 +314,7 @@ export const getCountry = (name: string) => countries.find((c) => c.name === nam
 export const countryImage = (name: string) => `/images/countries/${slugify(name)}.jpg`;
 
 export const networkStats = {
-  partners: String(countries.reduce((sum, c) => sum + c.hospitals, 0)),
+  partners: "350+",
   patients: "55,000+",
   countries: countries.length,
   rating: "4.8/5",

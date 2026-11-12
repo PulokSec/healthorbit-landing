@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { countries, flag } from "@/data/network";
-import { offices, socials, whatsapp } from "@/data/contact";
+import { offices, whatsapp } from "@/data/contact";
 
 export function SiteFooter() {
   return (
     <footer className="mt-24 bg-ink text-paper">
       <div className="mx-auto max-w-7xl px-5 pb-10 pt-16 sm:px-8">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
             <Logo tone="light" />
             <p className="mt-4 max-w-xs text-paper/70">
@@ -35,12 +35,21 @@ export function SiteFooter() {
           </div>
 
           <div>
+            <h2 className="mb-4 text-sm font-normal text-paper/55">Work with us</h2>
+            <ul className="space-y-2.5">
+              <li><Link href="/contact?topic=referral#inquiry" className="hover:text-signal">Become a referral partner</Link></li>
+              <li><Link href="/contact?topic=provider#inquiry" className="hover:text-signal">Join our hospital network</Link></li>
+            </ul>
+          </div>
+
+          <div>
             <h2 className="mb-4 text-sm font-normal text-paper/55">Offices</h2>
             <ul className="space-y-3">
               {offices.map((o) => (
                 <li key={o.id}>
                   <span className="mr-1.5" aria-hidden>{flag(o.code)}</span>
-                  {o.city}
+                  {o.city.split(", ")[0]}
+                  <span className="block">{o.city.split(", ").slice(1).join(", ")}</span>
                   <a href={`tel:${o.phone.replace(/\s/g, "")}`} className="block text-sm text-paper/60 hover:text-signal">
                     {o.phone}
                   </a>
@@ -65,13 +74,14 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-col justify-between gap-4 text-sm text-paper/55 sm:flex-row">
           <p>© {new Date().getFullYear()} HealthOrbit. Not for medical emergencies — call your local emergency number.</p>
+          {/* Social links hidden until real profiles exist.
           <ul className="flex gap-4">
             {socials.map((s) => (
               <li key={s.name}>
                 <a href={s.href} target="_blank" rel="noreferrer" className="hover:text-signal">{s.name}</a>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </footer>
