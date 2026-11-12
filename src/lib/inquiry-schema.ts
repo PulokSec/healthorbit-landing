@@ -3,7 +3,6 @@ import { z } from "zod";
 export const topics = [
   { value: "patient", label: "I’m a patient or family member" },
   { value: "referral", label: "I want to refer patients" },
-  { value: "insurer", label: "I represent an insurer or TPA" },
   { value: "provider", label: "My hospital wants to join" },
   { value: "other", label: "Something else" },
 ] as const;

@@ -7,7 +7,7 @@ export function SiteFooter() {
   return (
     <footer className="mt-24 bg-ink text-paper">
       <div className="mx-auto max-w-7xl px-5 pb-10 pt-16 sm:px-8">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr]">
           <div>
             <Logo tone="light" />
             <p className="mt-4 max-w-xs text-paper/70">
@@ -31,14 +31,6 @@ export function SiteFooter() {
               <li><Link href="/about" className="hover:text-signal">About us</Link></li>
               <li><Link href="/health-network" className="hover:text-signal">Health network</Link></li>
               <li><Link href="/contact" className="hover:text-signal">Contact</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="mb-4 text-sm font-normal text-paper/55">Work with us</h2>
-            <ul className="space-y-2.5">
-              <li><Link href="/contact?topic=referral" className="hover:text-signal">Become a referral partner</Link></li>
-              <li><Link href="/contact?topic=provider" className="hover:text-signal">Join our hospital network</Link></li>
             </ul>
           </div>
 

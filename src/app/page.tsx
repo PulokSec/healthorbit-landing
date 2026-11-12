@@ -40,7 +40,8 @@ const capabilities = [
     icon: Plane,
     tone: "border-rose-400/30 bg-rose-500/15 text-rose-300",
     title: "Air Ambulance",
-    highlight: null,
+    highlight: "For emergency transport service",
+    highlightTone: "text-blue-400",
     body: "Fully equipped airborne ICU charters with dedicated aeromedical doctors, ventilator support, and bed-to-bed transfers.",
   },
   {
@@ -118,13 +119,15 @@ export default function HomePage() {
             <h2 className="mt-6 text-3xl font-semibold text-white sm:text-5xl">Specialized Facilitation Capabilities</h2>
           </div>
           <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {capabilities.map(({ icon: Icon, tone, title, highlight, body }) => (
+            {capabilities.map(({ icon: Icon, tone, title, highlight, highlightTone, body }) => (
               <li key={title} className="rounded-3xl border border-white/10 bg-[#1b2538] p-6 sm:p-7">
                 <span className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border ${tone}`}>
                   <Icon className="h-6 w-6" aria-hidden />
                 </span>
                 <h3 className="mt-6 text-xl font-semibold leading-snug text-white">{title}</h3>
-                {highlight && <p className="mt-3 text-sm font-semibold text-teal-300">{highlight}</p>}
+                {highlight && (
+                  <p className={`mt-3 text-sm font-semibold ${highlightTone ?? "text-teal-300"}`}>{highlight}</p>
+                )}
                 <p className="mt-3 text-slate-300">{body}</p>
               </li>
             ))}
