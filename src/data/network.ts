@@ -84,6 +84,16 @@ const seeds: Record<string, Seed[]> = {
       highlight: "India’s largest hospital network, with thousands of cardiac surgeries and transplants each year.",
       specialties: ["Fertility", "Cardiology", "Colorectal surgery"],
     }],
+    ["Apollo Hospital", "New Delhi"],
+    ["Fortis Hospitals", "Delhi"],
+    ["Apollo Hospital", "New Delhi"],
+    ["Apollo Hospital", "New Delhi"],
+    ["Fortis Hospitals", "Delhi"],
+    ["Fortis Hospitals", "Delhi"],
+    ["Apollo Hospital", "New Delhi"],
+    ["Fortis Hospitals", "Delhi"],
+    ["Apollo Hospital", "New Delhi"],
+    ["Fortis Hospitals", "Delhi"],
     ["Apollo One Greams Road", "Chennai"],
     ["Medanta – The Medicity", "Gurugram", "Hospital", {
       highlight: "Founded by a renowned cardiac surgeon; known worldwide for complex heart procedures.",
@@ -99,14 +109,19 @@ const seeds: Record<string, Seed[]> = {
     ["Apollo AyurVAID Hospitals", "Bengaluru"],
     ["Wockhardt Hospital, Nashik", "Nashik"],
     ["BLK-Max Super Speciality Hospital", "Delhi"],
+    ["Yashoda Hospitals", "Hyderabad"],
     ["Rainbow Children’s Hospital & BirthRight – Bengaluru", "Bengaluru"],
     ["Wockhardt Hospital, Mumbai Central", "Mumbai"],
     ["HCG Cancer Hospital – Newtown", "Kolkata"],
+    ["Apollo One Greams Road", "Chennai"],
     ["Gleneagles Global Health City"],
     ["Max Super Speciality Hospital, Vaishali", "Vaishali"],
     ["Medicover Cancer Institute", "Hyderabad"],
     ["Max Super Speciality Hospital, Patparganj", "Delhi"],
+    ["Apollo AyurVAID Hospitals", "Bengaluru"],
     ["HCG Hospital", "Ahmedabad"],
+    ["Yashoda Hospitals", "Hyderabad"],
+    ["Wockhardt Hospital, Mumbai Central", "Mumbai"],
     ["Wockhardt Super Speciality Hospital, Mira Road", "Mumbai"],
     ["Accord Hospital", "Faridabad"],
     ["Medanta Super Speciality Hospital, Lucknow", "Lucknow"],
@@ -114,16 +129,30 @@ const seeds: Record<string, Seed[]> = {
     ["Artemis Hospital", "Gurugram"],
     ["Apollo Multispeciality Hospitals", "Kolkata"],
     ["Rainbow Children’s Hospital & BirthRight – Hyderabad", "Hyderabad"],
+    ["Rainbow Children’s Hospital & BirthRight – Bengaluru", "Bengaluru"],
+    ["Max Super Speciality Hospital, Patparganj", "Delhi"],
+    ["Apollo Speciality Hospitals, Vanagaram", "Chennai"],
+    ["Gleneagles Global Hospital", "Hyderabad"],
     ["Jay Prabha Medanta Super Speciality Hospital", "Patna"],
+    ["Artemis Hospital", "Gurugram"],
+    ["HCG Cancer Hospital – Borivali", "Mumbai"],
+    ["HCG Cancer Hospital – Newtown", "Kolkata"],
+    ["BLK-Max Super Speciality Hospital", "Delhi"],
     ["Medicover Hospitals, Navi Mumbai", "Navi Mumbai"],
     ["Apollo Excelcare Hospital", "Guwahati"],
     ["Kokilaben Dhirubhai Ambani Hospital", "Mumbai"],
     ["Wockhardt Super Speciality Hospital, Nagpur", "Nagpur"],
+    ["Apollo Excelcare Hospital", "Guwahati"],
     ["Apollo Cancer Centre Teynampet", "Chennai"],
+    ["Gleneagles Global Health City"],
     ["Max Hospital, Gurugram", "Gurugram"],
     ["Medicover Hospitals, Hitech City", "Hyderabad"],
+    ["Nanavati Max Hospital", "Mumbai"],
     ["Wockhardt Hospital, Rajkot", "Rajkot"],
+    ["HCG Cancer Hospital – Newtown", "Kolkata"],
     ["Max Super Speciality Hospital, Mohali", "Mohali"],
+    ["Kokilaben Dhirubhai Ambani Hospital", "Mumbai"],
+    ["Rainbow Children’s Hospital & BirthRight – Bengaluru", "Bengaluru"],
   ],
   China: [
     ["Fuda Cancer Hospital", "Guangzhou", "Hospital", {
@@ -347,9 +376,18 @@ const seeds: Record<string, Seed[]> = {
   ],
 };
 
+// The sheet lists some hospitals more than once; repeats get "-2", "-3"… slugs.
+const slugCounts = new Map<string, number>();
+const uniqueSlug = (name: string) => {
+  const base = slugify(name);
+  const n = (slugCounts.get(base) ?? 0) + 1;
+  slugCounts.set(base, n);
+  return n === 1 ? base : `${base}-${n}`;
+};
+
 export const facilities: Facility[] = Object.entries(seeds).flatMap(([country, list]) =>
   list.map(([name, city, type = "Hospital", extra = {}]) => ({
-    slug: slugify(name),
+    slug: uniqueSlug(name),
     name,
     city,
     country,
