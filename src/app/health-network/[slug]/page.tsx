@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarCheck, FileSearch, MessageCircle, Plane, Video } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarCheck, FileSearch, MessageCircle, Plane, Video } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
-import { facilities, facilitiesByCountry, flag, getCountry, getFacility, place } from "@/data/network";
+import { facilities, facilitiesByCountry, flag, getCountry, getFacility, place, type FacilityType } from "@/data/network";
 import { whatsapp } from "@/data/contact";
 
 export function generateStaticParams() {
@@ -20,6 +20,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+const noun: Record<FacilityType, string> = {
+  Hospital: "hospital",
+  Clinic: "clinic",
+  "Wellness centre": "centre",
+  Department: "department",
+};
+
 const support = [
   { icon: FileSearch, text: "Review of your reports by a specialist here before you travel" },
   { icon: CalendarCheck, text: "Appointments booked and confirmed for your travel dates" },
@@ -34,6 +41,8 @@ export default async function FacilityPage({ params }: { params: Promise<{ slug:
 
   const c = getCountry(f.country);
   const siblings = facilitiesByCountry(f.country).filter((x) => x.slug !== f.slug).slice(0, 6);
+  // Country totals include partners that aren't listed individually.
+  const otherCount = c.hospitals - 1;
 
   return (
     <div className="mx-auto max-w-7xl px-5 pt-8 sm:px-8">
@@ -52,7 +61,10 @@ export default async function FacilityPage({ params }: { params: Promise<{ slug:
             <span className="ml-1 rounded-pill bg-mist px-2.5 py-0.5 text-sm">{f.type}</span>
           </p>
           <h1 className="mt-4 text-[clamp(2.2rem,5vw,3.6rem)] font-semibold leading-[1.05]">{f.name}</h1>
-          {f.highlight && <p className="mt-5 max-w-[56ch] text-xl text-ink-soft">{f.highlight}</p>}
+          <p className="mt-5 max-w-[56ch] text-xl text-ink-soft">
+            {f.highlight ??
+              `A HealthOrbit partner ${noun[f.type]} in ${place(f)}. We arrange consultations, treatment plans and travel for international patients.`}
+          </p>
 
           {f.specialties && (
             <div className="mt-10">
@@ -85,18 +97,26 @@ export default async function FacilityPage({ params }: { params: Promise<{ slug:
                   <li key={s.slug}>
                     <Link href={`/health-network/${s.slug}`} className="flex justify-between gap-4 py-3.5 hover:underline">
                       <span className="font-medium">{s.name}</span>
-                      <span className="text-ink-mute">{s.city}</span>
+                      <span className="shrink-0 text-ink-mute">{s.city ?? (s.type !== "Hospital" ? s.type : null)}</span>
                     </Link>
                   </li>
                 ))}
               </ul>
+              {otherCount > siblings.length && (
+                <Link
+                  href={`/health-network?country=${encodeURIComponent(f.country)}`}
+                  className="mt-4 inline-flex items-center gap-2 font-medium hover:underline"
+                >
+                  See all {c.hospitals} partners in {f.country} <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
             </div>
           )}
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-[28px] border border-line bg-white p-6 sm:p-8">
-            <h2 className="text-2xl font-semibold">Ask about this hospital</h2>
+            <h2 className="text-2xl font-semibold">Ask about this {noun[f.type]}</h2>
             <p className="mt-2 text-ink-soft">Get treatment options and a cost estimate, usually within a day.</p>
             <div className="mt-6">
               <ContactForm compact defaultSubject={`Inquiry: ${f.name}`} />
