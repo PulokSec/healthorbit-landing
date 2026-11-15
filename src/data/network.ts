@@ -364,9 +364,11 @@ const seeds: Record<string, Seed[]> = {
       highlight: "A leading UK private hospital known for cancer care and surgical innovation.",
       specialties: ["Oncology", "Cardiology", "Colorectal surgery"],
     }],
-    // London hospitals the partner sheet lists under "United States".
-    ["London Independent Hospital", "London"],
-    ["Bishops Wood Hospital Cancer Centre", "London"],
+  ],
+  "United States": [
+    ["Sudbury Hill"],
+    ["The London Independent Hospital"],
+    ["Bishops Wood Hospital Cancer Centre"],
   ],
   Vietnam: [
     ["Vinmec Healthcare System", "Hanoi"],
