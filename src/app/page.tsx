@@ -164,12 +164,18 @@ export default function HomePage() {
           Pick a destination to see the accredited hospitals and specialist centres we work with there.
         </p>
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {countries.map((c) => (
-            <li key={c.code}>
+          {/* 8 on tablet and up, 4 on mobile */}
+          {countries.slice(0, 8).map((c, i) => (
+            <li key={c.code} className={i >= 4 ? "hidden sm:block" : undefined}>
               <CountryCard country={c} />
             </li>
           ))}
         </ul>
+        <div className="mt-10 flex justify-center">
+          <ButtonLink href="/health-network" variant="outline">
+            View all {countries.length} countries
+          </ButtonLink>
+        </div>
       </section>
 
       {/* Services + process */}
