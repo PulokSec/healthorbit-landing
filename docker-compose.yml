@@ -1,0 +1,13 @@
+# Local dev only. Mailpit is a fake SMTP server + web UI for catching
+# outbound email during development; nothing sent through it leaves your machine.
+#
+# SMTP:    localhost:1025 (matches SMTP_HOST/SMTP_PORT in .env.example)
+# Web UI:  http://localhost:8025 (every email the site sends shows up here)
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: healthorbit-mailpit
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    restart: unless-stopped
