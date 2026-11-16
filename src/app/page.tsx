@@ -115,7 +115,7 @@ export default function HomePage() {
               <Sparkles className="h-4 w-4" aria-hidden />
               Why choose HealthOrbit
             </span>
-            <h2 className="mt-6 text-3xl font-semibold text-white sm:text-5xl">Specialized Facilitation Capabilities</h2>
+            <h2 className="mt-6 text-3xl font-semibold text-white sm:text-5xl">Specialised Facilitation Capabilities</h2>
           </div>
           <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {capabilities.map(({ icon: Icon, tone, title, highlight, body }) => (
@@ -226,7 +226,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-semibold">Talk to a real coordinator</h2>
             <p className="mt-3 text-ink-soft">We usually reply within a few hours. For anything urgent, WhatsApp is fastest.</p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <ButtonLink href="/contact">Send an inquiry</ButtonLink>
+              <ButtonLink href="/contact">Send an enquiry</ButtonLink>
               <ButtonLink href={whatsapp.link()} variant="outline" target="_blank" rel="noreferrer">
                 <MessageCircle className="h-4 w-4" /> {whatsapp.display}
               </ButtonLink>

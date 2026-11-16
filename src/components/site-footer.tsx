@@ -12,7 +12,7 @@ export function SiteFooter() {
             <Logo tone="light" />
             <p className="mt-4 max-w-xs text-paper/70">
               We match international patients with accredited hospitals abroad and coordinate the trip from first
-              inquiry to follow-up at home.
+              enquiry to follow-up at home.
             </p>
             <a
               href={whatsapp.link()}

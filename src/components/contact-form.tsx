@@ -61,7 +61,7 @@ export function ContactForm({ defaultTopic = "patient", defaultSubject = "", com
             >
               <Check className="h-8 w-8" strokeWidth={2.5} />
             </motion.span>
-            <h3 className="mt-6 text-2xl font-semibold">Inquiry sent</h3>
+            <h3 className="mt-6 text-2xl font-semibold">Enquiry sent</h3>
             <p className="mx-auto mt-2 max-w-sm text-ink-soft">
               A patient support specialist will {channelPhrase[state.channel] ?? "contact you"} within 24 hours. Your
               reference is <strong className="font-semibold text-ink">{state.reference}</strong>.
@@ -70,7 +70,7 @@ export function ContactForm({ defaultTopic = "patient", defaultSubject = "", com
               Urgent? Message us on WhatsApp at {whatsapp.display}.
             </p>
             <a
-              href={whatsapp.link(`Hi HealthOrbit, following up on inquiry ${state.reference}.`)}
+              href={whatsapp.link(`Hi HealthOrbit, following up on enquiry ${state.reference}.`)}
               target="_blank"
               rel="noreferrer"
               className="mt-6 inline-flex h-11 items-center gap-2 rounded-pill border border-ink/25 px-5 font-medium hover:border-ink"
@@ -227,7 +227,7 @@ export function ContactForm({ defaultTopic = "patient", defaultSubject = "", com
                 className="mt-0.5 h-4 w-4 accent-[var(--color-ink)]" />
               <span>
                 I agree to the <a href="/terms" className="underline">terms of use</a> and{" "}
-                <a href="/privacy" className="underline">privacy policy</a>, and to be contacted about my inquiry.
+                <a href="/privacy" className="underline">privacy policy</a>, and to be contacted about my enquiry.
                 {errors.consent && <span className="mt-1 block text-alert">{errors.consent}</span>}
               </span>
             </label>
@@ -244,7 +244,7 @@ export function ContactForm({ defaultTopic = "patient", defaultSubject = "", com
                   <Loader2 className="h-4 w-4 animate-spin" /> Sending
                 </>
               ) : (
-                "Send inquiry"
+                "Send enquiry"
               )}
             </Button>
           </motion.form>

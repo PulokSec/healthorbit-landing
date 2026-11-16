@@ -105,7 +105,7 @@ export function SiteHeader() {
             <MessageCircle className="h-4 w-4" />
             WhatsApp
           </a>
-          <ButtonLink href="/contact">Make an inquiry</ButtonLink>
+          <ButtonLink href="/contact">Make an enquiry</ButtonLink>
         </div>
 
         <button
@@ -216,7 +216,7 @@ export function SiteHeader() {
                 ))}
               </div>
               <div className="mt-8 grid gap-3">
-                <ButtonLink href="/contact">Make an inquiry</ButtonLink>
+                <ButtonLink href="/contact">Make an enquiry</ButtonLink>
                 <ButtonLink href={whatsapp.link()} variant="outline" target="_blank" rel="noreferrer">
                   <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
                 </ButtonLink>

@@ -119,11 +119,11 @@ export default async function FacilityPage({ params }: { params: Promise<{ slug:
             <h2 className="text-2xl font-semibold">Ask about this {noun[f.type]}</h2>
             <p className="mt-2 text-ink-soft">Get treatment options and a cost estimate, usually within a day.</p>
             <div className="mt-6">
-              <ContactForm compact defaultSubject={`Inquiry: ${f.name}`} />
+              <ContactForm compact defaultSubject={`Enquiry: ${f.name}`} />
             </div>
           </div>
           <a
-            href={whatsapp.link(`Hello, I have an inquiry about ${f.name} in ${place(f)}.`)}
+            href={whatsapp.link(`Hello, I have an enquiry about ${f.name} in ${place(f)}.`)}
             target="_blank"
             rel="noreferrer"
             className="mt-4 flex items-center justify-center gap-2 rounded-pill bg-care px-5 py-3 font-medium text-white"

@@ -89,12 +89,12 @@ export function NetworkExplorer() {
         {/* Search + type */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
           <label className="relative flex-1">
-            <span className="sr-only">Search hospitals, cities or specialties</span>
+            <span className="sr-only">Search hospitals, cities or specialities</span>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-mute" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by hospital, city or specialty"
+              placeholder="Search by hospital, city or speciality"
               className="h-12 w-full rounded-pill border border-line bg-white pl-12 pr-11 outline-none transition-colors placeholder:text-ink-mute focus:border-ink"
             />
             {query && (

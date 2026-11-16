@@ -53,7 +53,7 @@ export default function AboutPage() {
           <div className="space-y-5 text-ink-soft lg:border-r lg:border-line lg:pr-10">
             <p>
               We understand the uncertainty and frustration that come with being unable to connect with the right
-              doctors, access specialized medical expertise, or receive the treatment you truly need. We know that
+              doctors, access specialised medical expertise, or receive the treatment you truly need. We know that
               behind every search for healthcare is a person seeking answers, a family looking for reassurance, and a
               hope for a healthier future.
             </p>
@@ -76,9 +76,9 @@ export default function AboutPage() {
             </h2>
             <div className="mt-5 space-y-5 text-ink-soft">
               <p>
-                We recognize that no two patients are alike. Every medical journey comes with its own challenges,
+                We recognise that no two patients are alike. Every medical journey comes with its own challenges,
                 expectations, and concerns. That is why we are fully committed to identifying the best possible
-                healthcare solutions for each patient, with a personalized approach built around their needs and
+                healthcare solutions for each patient, with a personalised approach built around their needs and
                 well-being.
               </p>
               <p>
@@ -99,7 +99,7 @@ export default function AboutPage() {
                 </p>
               </div>
               <p className="mt-5 max-w-[24ch] text-ink-soft">
-                A carefully selected network of trusted and globally recognized hospitals.
+                A carefully selected network of trusted and globally recognised hospitals.
               </p>
             </div>
             <div className="relative mt-auto h-40">

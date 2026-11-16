@@ -9,12 +9,12 @@ type Ring = { radius: number; duration: number; reverse?: boolean; items: Facili
 /** Partner hospitals shown in the orbit, in ring order. */
 const orbitSlugs = [
   "bumrungrad-international-hospital",
-  "apollo-hospital",
-  "raffles-hospital",
+  "indraprastha-apollo-hospitals-new-delhi",
+  "raffles-hospital-bugis",
   "samsung-medical-center",
   "anadolu-medical-center",
   "american-hospital-dubai",
-  "fuda-cancer-hospital",
+  "fuda-cancer-hospital-guangzhou",
   "prince-court-medical-centre",
 ];
 
