@@ -74,6 +74,7 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-col justify-between gap-4 text-sm text-paper/55 sm:flex-row">
           <p>© {new Date().getFullYear()} HealthOrbit. Not for medical emergencies — call your local emergency number.</p>
+          <Link href="/privacy-policy" className="hover:text-signal">Privacy policy</Link>
           {/* Social links hidden until real profiles exist.
           <ul className="flex gap-4">
             {socials.map((s) => (
