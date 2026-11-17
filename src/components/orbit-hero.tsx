@@ -82,8 +82,9 @@ export function OrbitHero() {
           {ring.items.map((f, i) => {
             const angle = (360 / ring.items.length) * i + ri * 30;
             const rad = (angle * Math.PI) / 180;
-            const x = 50 + ring.radius * Math.cos(rad);
-            const y = 50 + ring.radius * Math.sin(rad);
+            // Round so the server-rendered style string matches what the browser serialises (avoids hydration mismatch).
+            const x = +(50 + ring.radius * Math.cos(rad)).toFixed(3);
+            const y = +(50 + ring.radius * Math.sin(rad)).toFixed(3);
             const c = getCountry(f.country);
             return (
               <div
