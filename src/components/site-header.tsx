@@ -130,10 +130,11 @@ export function SiteHeader() {
             transition={{ duration: 0.18, ease: "easeOut" }}
             onMouseEnter={openMega}
             onMouseLeave={scheduleClose}
-            className="absolute inset-x-0 top-full hidden border-t border-line bg-paper shadow-[0_24px_40px_-24px_rgb(23_57_74/0.35)] lg:block"
+            className="absolute inset-x-0 top-full hidden max-h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-line bg-paper shadow-[0_24px_40px_-24px_rgb(23_57_74/0.35)] lg:block"
           >
-            <div className="mx-auto grid max-w-7xl grid-cols-[1fr_2.6fr] gap-10 px-8 py-9">
-              <div className="flex flex-col justify-between border-r border-line pr-10">
+            {/* Below xl the intro sits above a single row of regions, so the panel stays short on laptops */}
+            <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-8 py-7 xl:grid-cols-[1fr_2.6fr] xl:gap-10 xl:py-9">
+              <div className="flex items-end justify-between gap-8 border-b border-line pb-6 xl:flex-col xl:items-start xl:border-b-0 xl:border-r xl:pb-0 xl:pr-10">
                 <div>
                   <p className="font-display text-2xl leading-tight">
                     {countries.length} countries, one coordinator.
@@ -144,12 +145,12 @@ export function SiteHeader() {
                 </div>
                 <Link
                   href="/health-network"
-                  className="mt-6 inline-flex w-fit items-center gap-2 font-medium underline decoration-signal decoration-2 underline-offset-4"
+                  className="inline-flex w-fit shrink-0 items-center gap-2 font-medium underline decoration-signal decoration-2 underline-offset-4 xl:mt-6"
                 >
                   Browse the full network
                 </Link>
               </div>
-              <div className="grid grid-cols-3 gap-x-8 gap-y-6">
+              <div className="grid grid-cols-5 gap-x-5 gap-y-6 xl:grid-cols-3 xl:gap-x-8">
                 {regions.map((region) => (
                   <div key={region}>
                     <p className="mb-2 text-sm text-ink-mute">{region}</p>
