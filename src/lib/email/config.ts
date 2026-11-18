@@ -21,12 +21,32 @@ const schema = z.object({
   EMAIL_TEAM_TO: z.string().default("bd@healthorbit.com"),
 
   // Absolute site URL, used for the logo and links inside emails.
-  SITE_URL: z.string().url().default("http://localhost:3000"),
+  // Accepts a bare domain ("healthorbit.support") by assuming https.
+  SITE_URL: z
+    .preprocess((v) => (typeof v === "string" && v && !/^https?:\/\//.test(v) ? `https://${v}` : v), z.string().url())
+    .default("http://localhost:3000"),
 });
 
-export const emailConfig = schema.parse({
+const input = {
   ...process.env,
   // Treat empty strings in .env as "not set".
   SMTP_USER: process.env.SMTP_USER || undefined,
   SMTP_PASSWORD: process.env.SMTP_PASSWORD || undefined,
-});
+  SITE_URL: process.env.SITE_URL || undefined,
+};
+
+// A malformed value must not crash the module: that takes the whole form action
+// down with an opaque server error. Log what's wrong and fall back to defaults
+// for just those fields instead.
+const parsed = schema.safeParse(input);
+if (!parsed.success) {
+  console.error(
+    "[email] Invalid email env vars, using defaults for:",
+    parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`),
+  );
+}
+const badKeys = new Set(parsed.success ? [] : parsed.error.issues.map((i) => String(i.path[0])));
+
+export const emailConfig = parsed.success
+  ? parsed.data
+  : schema.parse(Object.fromEntries(Object.entries(input).filter(([k]) => !badKeys.has(k))));
