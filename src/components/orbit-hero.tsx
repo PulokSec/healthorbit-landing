@@ -86,6 +86,7 @@ export function OrbitHero() {
             const x = +(50 + ring.radius * Math.cos(rad)).toFixed(3);
             const y = +(50 + ring.radius * Math.sin(rad)).toFixed(3);
             const c = getCountry(f.country);
+            const place = [f.city, c.name].filter(Boolean).join(", ");
             return (
               <div
                 key={f.slug}
@@ -106,7 +107,7 @@ export function OrbitHero() {
                   >
                     <Link
                       href={`/health-network/${f.slug}`}
-                      title={`${f.name}, ${f.city}`}
+                      title={`${f.name}, ${place}`}
                       className="group flex max-w-[13.5rem] items-center gap-2 rounded-pill border border-line bg-white/95 p-1 sm:py-1.5 sm:pl-1.5 sm:pr-3 text-left shadow-[0_8px_20px_-12px_rgb(23_57_74/0.5)] backdrop-blur transition-colors hover:border-ink"
                     >
                       <span
@@ -117,7 +118,7 @@ export function OrbitHero() {
                       </span>
                       <span className="hidden min-w-0 leading-tight sm:block">
                         <span className="block truncate text-[0.78rem] font-semibold">{f.name}</span>
-                        <span className="block truncate text-[0.7rem] text-ink-mute">{f.city}</span>
+                        <span className="block truncate text-[0.7rem] text-ink-mute">{place}</span>
                       </span>
                     </Link>
                   </motion.div>
