@@ -74,7 +74,9 @@ export function OrbitHero() {
       {rings.map((ring, ri) => (
         <div
           key={`orbit-${ri}`}
-          className="absolute inset-0"
+          // Each ring is a full-size layer; without this the outer ring's layer
+          // sits over the inner ring's chips and swallows their clicks.
+          className="pointer-events-none absolute inset-0"
           style={{
             animation: reduce ? undefined : `orbit ${ring.duration}s linear infinite${ring.reverse ? " reverse" : ""}`,
           }}
@@ -90,7 +92,7 @@ export function OrbitHero() {
             return (
               <div
                 key={f.slug}
-                className="absolute"
+                className="pointer-events-auto absolute"
                 style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%, -50%)" }}
               >
                 <div
