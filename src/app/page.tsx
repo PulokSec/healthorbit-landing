@@ -18,7 +18,7 @@ import { OrbitHero } from "@/components/orbit-hero";
 import { FacilityCard } from "@/components/facility-card";
 import { CountryCard } from "@/components/country-card";
 import { ButtonLink } from "@/components/ui/button";
-import { countries, countryImage, featuredFacilities, networkStats } from "@/data/network";
+import { countries, featuredFacilities, networkStats } from "@/data/network";
 import { whatsapp } from "@/data/contact";
 
 const capabilities = [
@@ -66,6 +66,14 @@ const services = [
   { icon: HeartPulse, title: "Health check packages", body: "Screening plans built to catch serious conditions early." },
   { icon: Ambulance, title: "Emergency evacuation", body: "Urgent transfers and air ambulance to a partner hospital." },
   { icon: Video, title: "Video consultations", body: "Speak with a specialist from home, with no travel." },
+];
+
+/** Photo tiles under the contact band (Unsplash, free licence). */
+const contactTiles = [
+  { label: "Second opinion", image: "/images/services/second-opinion.jpg", alt: "A radiologist reviewing chest X-rays with a patient" },
+  { label: "Treatment abroad", image: "/images/services/treatment-abroad.jpg", alt: "A surgical team operating in a modern operating room" },
+  { label: "Air ambulance", image: "/images/services/air-ambulance.jpg", alt: "Medical crew loading a stretcher into an air ambulance helicopter" },
+  { label: "Video consult", image: "/images/services/video-consult.jpg", alt: "A doctor speaking with a patient on a laptop video call" },
 ];
 
 const steps = [
@@ -239,17 +247,17 @@ export default function HomePage() {
             </div>
           </div>
           <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {countries.slice(0, 4).map((c) => (
-              <li key={c.code} className="relative aspect-[4/3] overflow-hidden rounded-[18px] bg-mist">
+            {contactTiles.map((t) => (
+              <li key={t.label} className="relative aspect-[4/3] overflow-hidden rounded-[18px] bg-mist">
                 <Image
-                  src={countryImage(c.name)}
-                  alt=""
+                  src={t.image}
+                  alt={t.alt}
                   fill
                   sizes="(min-width: 1024px) 18rem, 45vw"
                   className="object-cover"
                 />
                 <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/0 to-ink/0" />
-                <span className="absolute bottom-3 left-4 text-sm font-medium text-white">{c.name}</span>
+                <span className="absolute bottom-3 left-4 text-sm font-medium text-white">{t.label}</span>
               </li>
             ))}
           </ul>
