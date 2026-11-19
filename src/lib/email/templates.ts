@@ -1,6 +1,6 @@
 import { emailConfig } from "./config";
 import { renderEmail, type RenderedEmail } from "./layout";
-import type { CallbackInput } from "@/lib/callback-schema";
+import { topics, type InquiryInput } from "@/lib/inquiry-schema";
 import type { ConsultationInput } from "@/lib/consultation-schema";
 import { whatsapp } from "@/data/contact";
 
@@ -9,58 +9,70 @@ import { whatsapp } from "@/data/contact";
 // sender. Templates only build content blocks; layout.ts handles the design.
 
 const site = () => emailConfig.SITE_URL.replace(/\/$/, "");
+const topicLabel = (v: string) => topics.find((t) => t.value === v)?.label ?? v;
 const firstName = (name: string) => name.trim().split(/\s+/)[0];
 const submittedAt = () =>
   new Date().toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Dhaka" }) + " (Dhaka)";
 
-/* ---------- Call-back request (care team) ---------- */
+const channelPhrase: Record<string, string> = {
+  WhatsApp: "on WhatsApp",
+  Email: "by email",
+  "Phone call": "by phone",
+  None: "by phone, email or WhatsApp",
+};
 
-export function callbackTeamEmail(d: CallbackInput, reference: string): RenderedEmail {
+/* ---------- Hospital page enquiry form (care team) ---------- */
+
+export function enquiryTeamEmail(d: InquiryInput, reference: string): RenderedEmail {
+  const subject = d.subject?.trim() || topicLabel(d.topic);
   return renderEmail({
-    subject: `Call-back request ${reference}: ${d.fullName}${d.context ? ` — ${d.context}` : ""}`,
-    preheader: `Call ${d.phone} · ${d.callTime}`,
+    subject: `New enquiry ${reference}: ${subject} — ${d.fullName}`,
+    preheader: d.message.slice(0, 120),
     blocks: [
-      { type: "heading", text: "Please call this person back" },
-      { type: "paragraph", text: `${d.fullName} asked for a call back.` },
+      { type: "heading", text: "New website enquiry" },
+      { type: "paragraph", text: `${d.fullName} sent an enquiry. Reply to this email to answer them directly.` },
       {
         type: "details",
-        title: "Call back",
+        title: "Contact",
         rows: [
           ["Reference", reference],
           ["Name", d.fullName],
-          ["Phone / WhatsApp", d.phone],
           ["Email", d.email],
-          ["Best time", d.callTime],
-          ["About", d.context],
+          ["Phone", d.phone],
+          ["Preferred channel", d.channel],
+          ["Enquiry type", topicLabel(d.topic)],
+          ["Subject", d.subject],
           ["Received", submittedAt()],
         ],
       },
-      { type: "button", label: "Open WhatsApp chat", href: `https://wa.me/${d.phone.replace(/[^0-9]/g, "")}` },
+      { type: "quote", label: "Message", text: d.message },
     ],
   });
 }
 
-export function callbackAckEmail(d: CallbackInput, reference: string): RenderedEmail {
+export function enquiryAckEmail(d: InquiryInput, reference: string): RenderedEmail {
   return renderEmail({
-    subject: `We’ll call you back (${reference})`,
-    preheader: "Our care team will phone you, usually within a day.",
+    subject: `We’ve received your enquiry (${reference})`,
+    preheader: "A patient support specialist will be in touch within 24 hours.",
     blocks: [
       { type: "heading", text: `Thank you, ${firstName(d.fullName)}` },
       {
         type: "paragraph",
-        text: `We’ve received your call-back request. Our care team will phone you on ${d.phone}, usually within a day.`,
+        text: `We’ve received your enquiry and a patient support specialist will contact you ${channelPhrase[d.channel] ?? "soon"} within 24 hours.`,
       },
       {
         type: "details",
-        title: "Your request",
+        title: "Your enquiry",
         rows: [
           ["Reference", reference],
-          ["Best time", d.callTime],
-          ["About", d.context],
+          ["Enquiry type", topicLabel(d.topic)],
+          ["Subject", d.subject],
         ],
       },
-      { type: "paragraph", text: "Rather not wait? Message us on WhatsApp and quote your reference." },
-      { type: "button", label: "Chat on WhatsApp", href: whatsapp.link(`Hi HealthOrbit, following up on call-back ${reference}.`) },
+      { type: "quote", label: "Your message", text: d.message },
+      { type: "paragraph", text: "Need to add something or speak to us sooner? Message us on WhatsApp and quote your reference." },
+      { type: "button", label: "Chat on WhatsApp", href: whatsapp.link(`Hi HealthOrbit, following up on enquiry ${reference}.`) },
+      { type: "note", text: "Please don’t reply with medical reports. We’ll share a secure way to send documents when they’re needed." },
     ],
   });
 }

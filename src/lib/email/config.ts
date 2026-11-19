@@ -19,7 +19,7 @@ const schema = z.object({
   // Each form sends from its own mailbox, which is also the SMTP login, since
   // Hostinger only relays mail whose From matches the authenticated mailbox.
   //   info — the contact page's consultation form
-  //   care — call-back requests
+  //   care — hospital page enquiries
   // Every team notification, from either form, goes to the care mailbox.
   EMAIL_FROM_NAME: z.string().default("HealthOrbit"),
   EMAIL_INFO_ADDRESS: z.string().email().default("info@healthorbit.support"),

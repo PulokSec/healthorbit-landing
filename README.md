@@ -25,7 +25,7 @@ Fonts (Sora, Instrument Sans) come from npm `@fontsource-variable` packages, so 
 ## Before going live
 
 1. **Contact details** – `src/data/contact.ts`. Phone numbers and addresses mirror the parent company; the `@healthorbit.com` emails and social links are placeholders.
-2. **Email** – set `SMTP_PASSWORD` (shared by both mailboxes) and the other `SMTP_*` vars from `.env.example`. The contact page's consultation form sends from and logs in as `info@healthorbit.support`; the call-back form on hospital pages sends from `care@healthorbit.support`. Every team notification from both forms is delivered to `care@healthorbit.support`.
+2. **Email** – set `SMTP_PASSWORD` (shared by both mailboxes) and the other `SMTP_*` vars from `.env.example`. The contact page's consultation form sends from and logs in as `info@healthorbit.support`; the enquiry form on hospital pages sends from `care@healthorbit.support`. Every team notification from both forms is delivered to `care@healthorbit.support`.
 3. **Terms and privacy** – the form links to `/terms` and `/privacy`, which don't exist yet.
 4. **Network data** – `src/data/network.ts`. Add `featured`, `highlight` and `specialties` to promote a hospital to the home page and hero orbit.
 
@@ -35,7 +35,7 @@ Fonts (Sora, Instrument Sans) come from npm `@fontsource-variable` packages, so 
 src/
   app/            routes, layout, globals.css (design tokens in @theme)
   components/     header (mega menu), footer, orbit-hero, network-explorer,
-                  consultation-form, callback-form, office-card, faq, facility-card, ui/button
+                  consultation-form, contact-form, office-card, faq, facility-card, ui/button
   data/           network.ts, contact.ts
   lib/            form schemas (Zod), email/ (SMTP + templates), utils.ts
 ```
