@@ -13,12 +13,17 @@ const schema = z.object({
     .enum(["true", "false"])
     .default("false")
     .transform((v) => v === "true"),
-  SMTP_USER: z.string().optional(),
+  // One password shared by every mailbox below. Leave blank for Mailpit (no auth).
   SMTP_PASSWORD: z.string().optional(),
-  SMTP_FROM: z.string().default("HealthOrbit <no-reply@healthorbit.com>"),
 
-  // Team inbox that receives website enquiries. Comma-separate several addresses.
-  EMAIL_TEAM_TO: z.string().default("bd@healthorbit.com"),
+  // Each form sends from its own mailbox, which is also the SMTP login, since
+  // Hostinger only relays mail whose From matches the authenticated mailbox.
+  //   info — the contact page's consultation form
+  //   care — call-back requests
+  // Every team notification, from either form, goes to the care mailbox.
+  EMAIL_FROM_NAME: z.string().default("HealthOrbit"),
+  EMAIL_INFO_ADDRESS: z.string().email().default("info@healthorbit.support"),
+  EMAIL_CARE_ADDRESS: z.string().email().default("care@healthorbit.support"),
 
   // Absolute site URL, used for the logo and links inside emails.
   // Accepts a bare domain ("healthorbit.support") by assuming https.
@@ -30,9 +35,10 @@ const schema = z.object({
 const input = {
   ...process.env,
   // Treat empty strings in .env as "not set".
-  SMTP_USER: process.env.SMTP_USER || undefined,
   SMTP_PASSWORD: process.env.SMTP_PASSWORD || undefined,
   SITE_URL: process.env.SITE_URL || undefined,
+  EMAIL_INFO_ADDRESS: process.env.EMAIL_INFO_ADDRESS || undefined,
+  EMAIL_CARE_ADDRESS: process.env.EMAIL_CARE_ADDRESS || undefined,
 };
 
 // A malformed value must not crash the module: that takes the whole form action

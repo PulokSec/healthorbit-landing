@@ -1,6 +1,6 @@
 "use server";
 
-import { inquirySchema, type FieldErrors, type InquiryState } from "@/lib/inquiry-schema";
+import { callbackSchema, type CallbackErrors, type CallbackState } from "@/lib/callback-schema";
 import {
   consultationSchema,
   type ConsultationErrors,
@@ -8,44 +8,47 @@ import {
 } from "@/lib/consultation-schema";
 import { sendEmail, teamInbox } from "@/lib/email/send";
 import {
+  callbackAckEmail,
+  callbackTeamEmail,
   consultationAckEmail,
   consultationTeamEmail,
-  enquiryAckEmail,
-  enquiryTeamEmail,
 } from "@/lib/email/templates";
 
 const newReference = () => `HO-${Date.now().toString(36).toUpperCase().slice(-6)}`;
 const deliveryFailed =
   "We couldn’t send your message just now. Please try again in a few minutes, or message us on WhatsApp.";
 
-export async function submitInquiry(_prev: InquiryState, formData: FormData): Promise<InquiryState> {
+export async function submitCallback(_prev: CallbackState, formData: FormData): Promise<CallbackState> {
   const raw = Object.fromEntries(formData.entries());
-  const parsed = inquirySchema.safeParse(raw);
+  const parsed = callbackSchema.safeParse(raw);
 
   if (!parsed.success) {
-    const errors: FieldErrors = {};
+    const errors: CallbackErrors = {};
     for (const issue of parsed.error.issues) {
-      const key = issue.path[0] as keyof FieldErrors;
+      const key = issue.path[0] as keyof CallbackErrors;
       errors[key] ??= issue.message;
     }
     return { status: "error", errors, message: "Check the highlighted fields and send again." };
   }
 
   // Honeypot: bots fill hidden fields, people don't.
-  if (formData.get("company_website")) {
-    return { status: "success", reference: "HO-000000", channel: parsed.data.channel };
-  }
+  if (formData.get("company_website")) return { status: "success", reference: "HO-000000" };
 
   const reference = newReference();
   const d = parsed.data;
 
-  // The team must receive the enquiry; if that fails, tell the sender rather than
-  // pretend it went through. The sender's acknowledgement is best-effort.
-  const delivered = await sendEmail({ to: teamInbox(), replyTo: d.email, ...enquiryTeamEmail(d, reference) });
+  // Goes out from, and to, the care mailbox. The care team must receive it; the
+  // sender's acknowledgement is best-effort and only if they gave an email.
+  const delivered = await sendEmail({
+    from: "care",
+    to: teamInbox(),
+    replyTo: d.email || undefined,
+    ...callbackTeamEmail(d, reference),
+  });
   if (!delivered) return { status: "error", errors: {}, message: deliveryFailed };
-  await sendEmail({ to: d.email, ...enquiryAckEmail(d, reference) });
+  if (d.email) await sendEmail({ from: "care", to: d.email, ...callbackAckEmail(d, reference) });
 
-  return { status: "success", reference, channel: d.channel };
+  return { status: "success", reference };
 }
 
 export async function submitConsultation(
@@ -71,12 +74,13 @@ export async function submitConsultation(
   const d = parsed.data;
 
   const delivered = await sendEmail({
+    from: "info",
     to: teamInbox(),
     replyTo: d.email || undefined,
     ...consultationTeamEmail(d, reference),
   });
   if (!delivered) return { status: "error", errors: {}, message: deliveryFailed };
-  if (d.email) await sendEmail({ to: d.email, ...consultationAckEmail(d, reference) });
+  if (d.email) await sendEmail({ from: "info", to: d.email, ...consultationAckEmail(d, reference) });
 
   return { status: "success", reference };
 }

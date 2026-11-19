@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, CalendarCheck, FileSearch, MessageCircle, Plane, Video } from "lucide-react";
-import { ContactForm } from "@/components/contact-form";
+import { CallbackForm } from "@/components/callback-form";
 import { facilities, facilitiesByCountry, flag, getCountry, getFacility, place, type FacilityType } from "@/data/network";
 import { whatsapp } from "@/data/contact";
 
@@ -117,9 +117,9 @@ export default async function FacilityPage({ params }: { params: Promise<{ slug:
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-[28px] border border-line bg-white p-6 sm:p-8">
             <h2 className="text-2xl font-semibold">Ask about this {noun[f.type]}</h2>
-            <p className="mt-2 text-ink-soft">Get treatment options and a cost estimate, usually within a day.</p>
+            <p className="mt-2 text-ink-soft">Leave your number and our care team will call you back, usually within a day.</p>
             <div className="mt-6">
-              <ContactForm compact defaultSubject={`Enquiry: ${f.name}`} />
+              <CallbackForm context={`${f.name}, ${place(f)}`} />
             </div>
           </div>
           <a

@@ -157,7 +157,7 @@ export function ConsultationForm({ defaultMessage = "" }: { defaultMessage?: str
         <input type="checkbox" name="privacyConsent" checked={consent} onChange={(e) => setConsent(e.target.checked)}
           className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--color-ink)]" />
         <span>
-          I have read and agree to the <a href="/privacy" className="underline">Privacy Notice</a> and consent to being
+          I have read and agree to the <a href="/privacy-policy" className="underline">Privacy Notice</a> and consent to being
           contacted about my enquiry. <span className="text-alert">*</span>
           {errors.privacyConsent && <span className="mt-1 block text-alert">{errors.privacyConsent}</span>}
         </span>
